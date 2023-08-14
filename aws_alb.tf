@@ -5,7 +5,6 @@ resource "aws_lb" "alb" {
 
   security_groups = [aws_security_group.web.id]
   subnets         = [aws_subnet.public_subnet.id, aws_subnet.public_dummy_subnet.id]
-  ip_address_type = "ipv4"
 }
 
 resource "aws_lb_target_group" "alb_target" {
@@ -13,6 +12,15 @@ resource "aws_lb_target_group" "alb_target" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.vpc.id
+  health_check {
+    interval            = 30
+    path                = "/index.html"
+    port                = 80
+    protocol            = "HTTP"
+    timeout             = 5
+    unhealthy_threshold = 2
+    matcher             = 200
+  }
 }
 
 resource "aws_lb_target_group_attachment" "private_ec2" {
