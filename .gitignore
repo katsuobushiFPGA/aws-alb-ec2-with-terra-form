@@ -1,0 +1,5 @@
+.*
+id_*
+*.backup
+*.tfstate
+!.gitignore
