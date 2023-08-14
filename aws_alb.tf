@@ -4,7 +4,7 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
 
   security_groups = [aws_security_group.web.id]
-  subnets         = [aws_subnet.public_subnet.id]
+  subnets         = [aws_subnet.public_subnet.id, aws_subnet.public_dummy_subnet.id]
   ip_address_type = "ipv4"
 }
 
